@@ -8,22 +8,22 @@ db.on("error",(err)=>{
 })
 
 module.exports = {
-
+//getNotes returns all objects
     getNotes : (req,res)=> {
         db.notes.find({},(err,data)=>{
             err ? res.send(err) : res.send(data);
         });
     },
-    
+    //getNote returns one object
     getNote: (req,res)=> {
-        db.notes.find({_id: mongojs.ObjectID( req.params.id)}, (err,data)=>{
+        db.notes.findOne({_id: mongojs.ObjectID( req.params.id)}, (err,data)=>{
             err ? res.send(err) : res.send(data);
         });
         // db.notes.find({completed: req.params.completed}, (err,data)=>{
         //     err ? res.send(err) : res.send(data);
         // });
     },
-
+//MongoDB allows you to save arrays and objects to the collection
     addNote : (req,res)=> {
         db.notes.insert({text: req.body.text, completed: req.body.completed, tags: []},
             (err,data) => err ? res.send(err) : res.send(data));
